@@ -15,3 +15,4 @@ echo -e "pytest\nrequests" > requirements.txt
 echo -e "venv/\n__pycache__/\n.pytest_cache/" > .gitignore
 ```
 
+Don't forget to "source venv/bin/activate" when you return to your work after shutting down or ...
