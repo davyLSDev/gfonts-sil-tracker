@@ -1,6 +1,7 @@
 # tracker.py
 import csv
 import os
+import json
 from datetime import datetime
 
 def filter_sil_fonts(font_data):
@@ -24,3 +25,8 @@ def append_to_csv(data, filename="font_metrics.csv"):
                 "Designer": font.get("designer"),
                 "7 Day Views": font.get("views_7_day")
             })
+
+def clean_and_parse_json(raw_text):
+    # Strips the leading security characters, newlines, and spaces
+    cleaned_text = raw_text.lstrip(")]}'\n ")
+    return json.loads(cleaned_text)

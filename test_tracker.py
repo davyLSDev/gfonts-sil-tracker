@@ -3,6 +3,7 @@ import os
 import csv
 from tracker import filter_sil_fonts
 from tracker import append_to_csv
+from tracker import clean_and_parse_json
 
 def test_filter_sil_as_sole_author_fonts():
     mock_data = [
@@ -34,3 +35,15 @@ def test_append_to_csv_writes_data_with_timestamp(tmp_path):
         assert "Date" in headers
         assert "Charis SIL" in first_row
         assert "1500" in first_row
+
+def test_clean_and_parse_json_strips_google_prefix():
+    # 1. Arrange: Create a string that mimics exactly the json that Google outputs
+    # when accessing https://fonts.google.com/metadata/stats
+    raw_google_string = ")]}'\n[\n  {\n    \"family\": \"Charis SIL\"\n  }\n]"
+    
+    # 2. Act: Pass it to our unwritten function
+    result = clean_and_parse_json(raw_google_string)
+    
+    # 3. Assert: Verify it's a real Python list and the prefix is gone
+    assert isinstance(result, list)
+    assert result[0]["family"] == "Charis SIL"
