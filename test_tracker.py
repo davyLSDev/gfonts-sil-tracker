@@ -2,6 +2,7 @@
 import os
 import csv
 from tracker import filter_sil_fonts
+from tracker import append_to_csv
 
 def test_filter_sil_as_sole_author_fonts():
     mock_data = [
