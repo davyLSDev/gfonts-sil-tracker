@@ -16,3 +16,5 @@ echo -e "venv/\n__pycache__/\n.pytest_cache/" > .gitignore
 ```
 
 Don't forget to "source venv/bin/activate" when you return to your work after shutting down or ...
+
+The actual URL is https://fonts.google.com/metadata/stats found by using developer tools (F12) on browser pointing to https://fonts.google.com/analytics
