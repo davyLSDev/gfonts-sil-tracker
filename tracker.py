@@ -17,8 +17,15 @@ def fetch_data(url):
         return ""
 
 def filter_sil_fonts(font_data):
-    # Enforces strict equality so multi-designer/derivatives are ignored
-    return [font for font in font_data if font.get("designer") == "SIL International"]
+    sil_fonts = []
+    for font in font_data:
+        designers_list = font.get("designers", [])
+        
+        # Check that the list has exactly 1 item and it is 'SIL International'
+        if len(designers_list) == 1 and designers_list[0] == "SIL International":
+            sil_fonts.append(font)
+            
+    return sil_fonts
 
 def append_to_csv(data, filename="font_metrics.csv"):
     file_exists = os.path.isfile(filename)

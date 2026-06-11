@@ -37,17 +37,31 @@ def test_fetch_data_returns_empty_string_on_network_failure(mock_get):
     assert result == ""
 
 def test_filter_sil_as_sole_author_fonts():
-    mock_data = [
-        {"font_family": "Charis SIL", "designer": "SIL International", "views_7_day": 1500},
-        {"font_family": "David Libre", "designer": "SIL International, Meir Sadan", "views_7_day": 1200},
-        {"font_family": "Roboto", "designer": "Christian Robertson", "views_7_day": 50000}
+    # Arrange: Setup mock data mirroring Google's exact production format
+    real_google_format_mock = [
+        {
+            "family": "Charis SIL",
+            "designers": ["SIL International"],
+            "viewsByDateRange": {"7day": {"views": 1500, "change": 0.02}}
+        },
+        {
+            "family": "David Libre",
+            "designers": ["SIL International", "Meir Sadan"],  # Not sole author! Exclude.
+            "viewsByDateRange": {"7day": {"views": 1200, "change": -0.01}}
+        },
+        {
+            "family": "Roboto",
+            "designers": ["Christian Robertson"],  # Wrong author. Exclude.
+            "viewsByDateRange": {"7day": {"views": 50000, "change": 0.05}}
+        }
     ]
     
-    result = filter_sil_fonts(mock_data)
+    # Act: Call your filtering function
+    result = filter_sil_fonts(real_google_format_mock)
     
-    # We expect exactly 1 font ("Charis SIL") and no derivatives like David Libre
+    # Assert: We expect exactly 1 font back, and it must be Charis SIL
     assert len(result) == 1
-    assert result[0]["font_family"] == "Charis SIL"
+    assert result[0]["family"] == "Charis SIL"
     
 def test_append_to_csv_writes_data_with_timestamp(tmp_path):
     test_csv = tmp_path / "metrics.csv"
