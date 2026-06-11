@@ -1,7 +1,14 @@
-name: Run Font Tracker Script
+name: Live Font Tracker Container
 
 on:
+  schedule:
+    # Runs automatically every Thursday at 4:00 PM UTC (10:00 AM Calgary time)
+    - cron: '0 16 * * 4'
   workflow_dispatch:
+
+# Explicitly enforces Node 24 to clear GitHub's upcoming deprecation
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
 jobs:
   run-script:
@@ -26,7 +33,8 @@ jobs:
 
     - name: Send Success Email
       if: success()
-      uses: dawidd6/action-send-mail@v3
+      # Bumped to v4 to fully support Node 24 environments cleanly
+      uses: dawidd6/action-send-mail@v4
       with:
         server_address: ${{ secrets.SMTP_SERVER }}
         server_port: ${{ secrets.SMTP_PORT }}
