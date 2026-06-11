@@ -2,7 +2,19 @@
 import csv
 import os
 import json
+import requests
 from datetime import datetime
+
+def fetch_data(url):
+    try:
+        headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
+        response = requests.get(url, headers=headers, timeout=15)
+        
+        if response.status_code == 200:
+            return response.text
+        return ""
+    except Exception:
+        return ""
 
 def filter_sil_fonts(font_data):
     # Enforces strict equality so multi-designer/derivatives are ignored
