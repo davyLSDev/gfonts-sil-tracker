@@ -2,54 +2,8 @@ name: Run Font Tracker Script
 
 on:
   schedule:
-    # Runs automatically every Thursday at 4:00 PM UTC
-    - cron: '0 16 * * 4'name: Run Font Tracker Script
-
-on:
-  schedule:
-    # Runs automatically every Thursday at 4:00 PM UTC
     - cron: '0 16 * * 4'
-  workflow_dispatch: # This adds the manual "Run workflow" button in the GitHub UI
-
-jobs:
-  run-script:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests
-
-    - name: Run Tracker Script
-      run: python tracker.py
-
-    - name: Send Success Email
-      if: success()
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: ${{ secrets.SMTP_SERVER }}
-        server_port: ${{ secrets.SMTP_PORT }}
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-        subject: "Google Fonts Tracker: Task Completed Successfully"
-        to: ${{ secrets.RECIPIENT_EMAIL }}
-        from: "GitHub Actions Tracker"
-        body: |
-          Hello Dawson,
-          
-          The gfonts-sil-tracker script has completed successfully on the GitHub Actions Linux runner.
-          
-          The 'font_metrics.csv' has been updated inside the container sandbox but was intentionally left uncommitted to the repository.
-  workflow_dispatch: # This adds the manual "Run workflow" button in the GitHub UI
+  workflow_dispatch:
 
 jobs:
   run-script:
