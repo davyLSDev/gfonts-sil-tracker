@@ -15,6 +15,11 @@ def fetch_data(url):
         return ""
     except Exception:
         return ""
+        
+def clean_and_parse_json(raw_text):
+    # Strips the leading security characters, newlines, and spaces
+    cleaned_text = raw_text.lstrip(")]}'\n ")
+    return json.loads(cleaned_text)
 
 def filter_sil_fonts(font_data):
     sil_fonts = []
@@ -79,7 +84,3 @@ if __name__ == "__main__":
     else:
         print("Failed to pull raw endpoint metrics from the network.")
 
-def clean_and_parse_json(raw_text):
-    # Strips the leading security characters, newlines, and spaces
-    cleaned_text = raw_text.lstrip(")]}'\n ")
-    return json.loads(cleaned_text)
