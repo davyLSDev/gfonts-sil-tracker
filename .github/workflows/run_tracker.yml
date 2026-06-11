@@ -2,13 +2,12 @@ name: Run Font Tracker Script
 
 on:
   schedule:
-    - cron: '0 16 * * 4'
+    - cron: "0 16 * * 4"
   workflow_dispatch:
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
