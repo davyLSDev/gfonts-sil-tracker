@@ -28,22 +28,56 @@ def filter_sil_fonts(font_data):
     return sil_fonts
 
 def append_to_csv(data, filename="font_metrics.csv"):
-    file_exists = os.path.isfile(filename)
-    headers = ["Date", "Font Family", "Designer", "7 Day Views"]
+    headers = ["Date", "Font", "Weekly Views", "Lifetime Views"]
     today = datetime.now().strftime("%Y-%m-%d")
     
-    with open(filename, mode='a', newline='') as f:
+    existing_rows = []
+    if os.path.isfile(filename):
+        with open(filename, mode='r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                existing_rows.append(row)
+                
+    fresh_rows = []
+    for font in data:
+        date_range = font.get("viewsByDateRange", {}) or {}
+        day_7_stats = date_range.get("7day", {}) or {}
+        weekly_views = day_7_stats.get("views", 0)
+        lifetime_views = font.get("totalViews", 0)
+        
+        fresh_rows.append({
+            "Date": today,
+            "Font": font.get("family"),
+            "Weekly Views": weekly_views,
+            "Lifetime Views": lifetime_views
+        })
+        
+    all_rows = fresh_rows + existing_rows
+    
+    with open(filename, mode='w', newline='', encoding='utf-8') as f:
         writer = csv.DictWriter(f, fieldnames=headers)
-        if not file_exists:
-            writer.writeheader()
-            
-        for font in data:
-            writer.writerow({
-                "Date": today,
-                "Font Family": font.get("font_family"),
-                "Designer": font.get("designer"),
-                "7 Day Views": font.get("views_7_day")
-            })
+        writer.writeheader()
+        writer.writerows(all_rows)
+
+if __name__ == "__main__":
+    TARGET_URL = "https://fonts.google.com/metadata/stats"
+    
+    print("Fetching live analytics metrics from Google Fonts...")
+    raw_payload = fetch_data(TARGET_URL)
+    
+    if raw_payload:
+        parsed_list = clean_and_parse_json(raw_payload)
+        sil_only_fonts = filter_sil_fonts(parsed_list)
+        
+        if sil_only_fonts:
+            append_to_csv(sil_only_fonts)
+            print(f"\nSuccess! Tracked {len(sil_only_fonts)} sole-designer SIL fonts.")
+            for font in sil_only_fonts:
+                print(f" -> {font['family']}: {font['totalViews']:,} overall views.")
+        else:
+            print("No fonts found matching SIL International as the sole author.")
+    else:
+        print("Failed to pull raw endpoint metrics from the network.")
 
 def clean_and_parse_json(raw_text):
     # Strips the leading security characters, newlines, and spaces

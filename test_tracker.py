@@ -63,23 +63,40 @@ def test_filter_sil_as_sole_author_fonts():
     assert len(result) == 1
     assert result[0]["family"] == "Charis SIL"
     
-def test_append_to_csv_writes_data_with_timestamp(tmp_path):
-    test_csv = tmp_path / "metrics.csv"
-    sample_data = [{"font_family": "Charis SIL", "designer": "SIL International", "views_7_day": 1500}]
+def test_append_to_csv_keeps_newest_data_at_the_top(tmp_path):
+    test_csv = tmp_path / "font_metrics.csv"
+    headers = ["Date", "Font", "Weekly Views", "Lifetime Views"]
     
-    # Act
-    append_to_csv(sample_data, filename=str(test_csv))
+    with open(test_csv, mode='w', newline='', encoding='utf-8') as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+        writer.writerow({
+            "Date": "2026-06-04", 
+            "Font": "Charis SIL", 
+            "Weekly Views": "1000",
+            "Lifetime Views": "4000000"
+        })
+
+    fresh_scraped_data = [{
+        "family": "Charis SIL",
+        "designers": ["SIL International"],
+        "totalViews": 4119000,
+        "viewsByDateRange": {"7day": {"views": 1500}}
+    }]
     
-    # Assert file creation and contents
-    assert os.path.exists(test_csv)
-    with open(test_csv, mode='r') as f:
+    append_to_csv(fresh_scraped_data, filename=str(test_csv))
+    
+    with open(test_csv, mode='r', encoding='utf-8') as f:
         reader = csv.reader(f)
-        headers = next(reader)
-        first_row = next(reader)
+        file_headers = next(reader)
+        row_1 = next(reader)
+        row_2 = next(reader)
         
-        assert "Date" in headers
-        assert "Charis SIL" in first_row
-        assert "1500" in first_row
+        assert file_headers == ["Date", "Font", "Weekly Views", "Lifetime Views"]
+        assert row_1[0] == "2026-06-11"
+        assert row_1[2] == "1500"
+        assert row_1[3] == "4119000"
+        assert row_2[0] == "2026-06-04"
 
 def test_clean_and_parse_json_strips_google_prefix():
     # 1. Arrange: Create a string that mimics exactly the json that Google outputs
