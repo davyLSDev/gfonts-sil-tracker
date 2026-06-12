@@ -10,7 +10,7 @@ This project is set up with a Github workflow which is set up using *.github/wor
 * This was first stab at trying to get analytics from [URL to get the Google Fonts analytics in JSON format](https://fonts.google.com/metadata/stats).
 
 I'll consult with the rest of WSTech leadership about what the next steps to move this into the **useful** category of utilities. 
-* Very likely it would be useful to have this utility *write* back the *csv* file back into the repo, i.e. add, commit, and push to the repo in order to have the font stats tabulated.
+* Very likely it would be useful to have this utility *write* back the *csv* file into the repo, i.e. add, commit, and push to the repo in order to have the font stats tabulated.
 * It may prove useful to collect this data daily.
 * Perhaps moving forward it might make more sense to have a different way of storing the data, such as in a database?
 * It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
@@ -28,7 +28,7 @@ I'll consult with the rest of WSTech leadership about what the next steps to mov
     },
     "viewsByOS": {
       "Linux": 0.362,
-      "Macintosh": 0.199,* It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
+      "Macintosh": 0.199,
       "Others": 0.008,
       "Windows": 0.179,
       "X11": 0.036,
@@ -40,12 +40,11 @@ I'll consult with the rest of WSTech leadership about what the next steps to mov
 
 * The actual [URL to get the Google Fonts analytics in JSON format](https://fonts.google.com/metadata/stats) found by using developer tools (F12) on browser pointing to [Google Font Analytics Page](https://fonts.google.com/analytics)
 
-Have "conversations" with Gemeni especially for troubleshoothing and doing the testing.
-
 ### Transparent method of developing this
 
-* The following notes are admitedly rather basic, but I find it helpful when this is not my **day job**, to record ways I've set things up or how I've gone about developing something.
+The following notes are admitedly rather basic, but I find it helpful when this is not my **day job**, to record ways I've set things up or how I've gone about developing something.
 
+* Have *conversations* with Gemeni especially for troubleshoothing and doing the testing.
 * Here is a rough go at the initial conversation to kick off the project:
 
 > Using a TDD approach, I'd like to use Python to write a "webscraper" called "gfonts-sil-tracker" which pulls the data from wherever https://fonts.google.com/analytics assembles it. I'm only interested in the fonts with SIL International as the sole designer. I work on linux computers, so yeah a cron job seems like a good way to keep this ticking. I like the CSV approach to storing the data that is scraped. I also like the idea of updating the csv file in the github repo itself.
