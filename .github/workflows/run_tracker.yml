@@ -43,6 +43,7 @@ jobs:
         subject: "Google Fonts Tracker: Task Completed Successfully"
         to: ${{ secrets.RECIPIENT_EMAIL }}
         from: "GitHub Actions Tracker"
+        attachments: font_metrics.csv
         body: |
           Hello Dawson,
           
