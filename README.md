@@ -1,16 +1,19 @@
 # gfonts-sil-tracker
 This project is meant to help provide analytics from [Google Font Analytics](https://fonts.google.com/analytics), which has no API.
 
-The business side of this project resides in *tracker.py*. This utility first fetches font statistics from [Google Font Analytics](https://fonts.google.com/analytics). Then it cleans it up and filtres for fonts where SIL International is the *sole* author, then "appends" *font_metrics.csv" file just under the heading (or first row of csv). 
+The business side of this project resides in *tracker.py*. This utility first fetches font statistics from [Google Font Analytics](https://fonts.google.com/analytics). Then it cleans it up and filtres for fonts where SIL International is the *sole* author, then *appends* *font_metrics.csv* file just under the heading, or first row of this csv file. 
 
-This project is set up with a Github workflow which is set up using .github/workflows/run_tracker.yml to spin up an ubuntu container which checks out this repository, sets up Python, installs dependencies, runs the *tracker.py* script and finally serves up an email to me which attaches the latests font_metrics.csv. Oh, yes, and the only data that is populated into the csv file is: Date (of running the script), Font name, Weekly Views, Lifetime Views.
+This project is set up with a Github workflow which is set up using *.github/workflows/run_tracker.yml* to spin up an ubuntu container which checks out this repository, sets up Python, installs dependencies, runs the *tracker.py* script and finally serves up an email to me which attaches the latests font_metrics.csv. Oh, yes, and the only data that is populated into the csv file is: Date (of running the script), Font name, Weekly Views, Lifetime Views.
 
-## Other ideas or - where to go from here
+## Future Development Angles
 
 * This was first stab at trying to get analytics from [URL to get the Google Fonts analytics in JSON format](https://fonts.google.com/metadata/stats).
 
-* It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
+I'll consult with the rest of WSTech leadership about what the next steps to move this into the **useful** category of utilities. 
+* Very likely it would be useful to have this utility *write* back the *csv* file back into the repo, i.e. add, commit, and push to the repo in order to have the font stats tabulated.
 * It may prove useful to collect this data daily.
+* Perhaps moving forward it might make more sense to have a different way of storing the data, such as in a database?
+* It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
 * There is more information that could be gleaned, but I wasn't sure how useful it was:
 
 ```json
@@ -25,7 +28,7 @@ This project is set up with a Github workflow which is set up using .github/work
     },
     "viewsByOS": {
       "Linux": 0.362,
-      "Macintosh": 0.199,
+      "Macintosh": 0.199,* It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
       "Others": 0.008,
       "Windows": 0.179,
       "X11": 0.036,
