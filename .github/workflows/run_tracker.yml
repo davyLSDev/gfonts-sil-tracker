@@ -49,4 +49,4 @@ jobs:
           
           The gfonts-sil-tracker script has completed successfully on the GitHub Actions Linux runner.
           
-          The 'font_metrics.csv' has been updated inside the container sandbox but was intentionally left uncommitted to the repository.
+          I am attaching the 'font_metrics.csv' which has been updated inside the container sandbox but was intentionally left uncommitted to the repository.
