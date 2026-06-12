@@ -45,7 +45,7 @@ jobs:
         from: "GitHub Actions Tracker"
         attachments: font_metrics.csv
         body: |
-          Hello Dawson,
+          Hi Dawson,
           
           The gfonts-sil-tracker script has completed successfully on the GitHub Actions Linux runner.
           
