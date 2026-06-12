@@ -2,8 +2,8 @@ name: Live Font Tracker Container
 
 on:
   schedule:
-    # Runs automatically every Thursday at 4:00 PM UTC (10:00 AM Calgary time)
-    - cron: '0 16 * * 4'
+    # Runs automatically every Monday at 4:00 PM UTC (10:00 AM Calgary time)
+    - cron: '0 16 * * 1'
   workflow_dispatch:
 
 # Explicitly enforces Node 24 to clear GitHub's upcoming deprecation
