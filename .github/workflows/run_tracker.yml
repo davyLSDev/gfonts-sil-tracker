@@ -44,19 +44,10 @@ jobs:
 
     - name: Commit and Push Changes
       if: steps.check_changes.outputs.has_changes == 'true'
-      run: |
-        # configure user as the github-actions bot
-        git config user.name github-actions[bot]
-        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-
-        # stage any file changes to be committed
-        git add .
-
-        # make commit with staged changes
-        git commit -m 'Updated font_metrics.csv'
-
-        # push the commit back up to source GitHub repository
-        git push
+      uses: devops-infra/action-commit-push@v1.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: "Updated font_metrics.csv"
 
     - name: Send Success Email
       if: success()
