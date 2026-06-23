@@ -3,7 +3,7 @@ This project is meant to help provide analytics from [Google Font Analytics](htt
 
 The business side of this project resides in *tracker.py*. This utility first fetches font statistics from [Google Font Analytics](https://fonts.google.com/analytics). Then it cleans it up and filtres for fonts where SIL International is the *sole* author, then *appends* *font_metrics.csv* file just under the heading, or first row of this csv file. 
 
-This project is set up with a Github workflow which is set up using *.github/workflows/run_tracker.yml* to spin up an ubuntu container which checks out this repository, sets up Python, installs dependencies, runs the *tracker.py* script and finally serves up an email to me which attaches the latests font_metrics.csv. Oh, yes, and the only data that is populated into the csv file is: Date (of running the script), Font name, Weekly Views, Lifetime Views.
+This project is set up with a Github workflow which is set up using *.github/workflows/run_tracker.yml* to spin up an ubuntu container which checks out this repository, sets up Python, installs dependencies, runs the *tracker.py* script, does a git commit and push if there is a change in *font_metrics.csv*, then finally serves up an email to me which attaches the latests *font_metrics.csv*. Oh, yes, and the only data that is populated into the csv file is: Date (of running the script), Font name, Weekly Views, Lifetime Views.
 
 ## Future Development Angles
 
