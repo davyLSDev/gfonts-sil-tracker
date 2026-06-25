@@ -10,7 +10,7 @@ This project is set up with a Github workflow which is set up using *.github/wor
 * This was first stab at trying to get analytics from [URL to get the Google Fonts analytics in JSON format](https://fonts.google.com/metadata/stats).
 
 I'll consult with the rest of WSTech leadership about what the next steps to move this into the **useful** category of utilities. 
-* Very likely it would be useful to have this utility *write* back the *csv* file into the repo, i.e. add, commit, and push to the repo in order to have the font stats tabulated.
+* ~~Very likely it would be useful to have this utility *write* back the *csv* file into the repo, i.e. add, commit, and push to the repo in order to have the font stats tabulated.~~
 * It may prove useful to collect this data daily.
 * Perhaps moving forward it might make more sense to have a different way of storing the data, such as in a database?
 * It most likely would be useful to have some kind of dashboard that does font statics deltas between dates that a user selects.
